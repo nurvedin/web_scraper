@@ -1,0 +1,26 @@
+{
+  "name": "nd222dp-examination-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "lint": "standard | snazzy || true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1dv523/nd222dp-examination-1.git"
+  },
+  "author": "Nurvedin Dizdarevic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1dv523/nd222dp-examination-1/issues"
+  },
+  "homepage": "https://github.com/1dv523/nd222dp-examination-1#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "snazzy": "^8.0.0",
+    "standard": "^14.3.1"
+  }
+}
