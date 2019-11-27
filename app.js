@@ -23,12 +23,10 @@ request(rootLink, (error, response, html) => {
               const availableDays = $('td').text()
               const dayArr = [weekendDays.split('day', 3)]
               const availableArr = [availableDays.match(/.{1,2}/g)]
-              // console.log(dayArr[0][0])
-              // console.log(availableArr[0][0])
+
               if (dayArr[0][0] === 'Fri' && availableArr[0][0] === 'ok') {
                 counter++
                 freeDay.push(dayArr[0][0])
-                // console.log('Friday')
               } else if (dayArr[0][0] === 'Fri' && availableArr[0][0] === 'OK') {
                 counter++
                 freeDay.push(dayArr[0][0])
@@ -119,17 +117,72 @@ request(rootLink, (error, response, html) => {
       linkArr.push(allLinks)
     })
   }
-  const dinner = linkArr[2]
-  request(dinner, (error, response, html) => {
+  const dinnerUrl = linkArr[2] + '/'
+  console.log(dinnerUrl)
+
+  const jsonData = {
+    username: 'zeke',
+    password: 'coys',
+    submit: 'login'
+  }
+
+  // request.post({
+  //  url: dinnerUrl,
+  //  json: jsonData
+  // }, function (error, response, html) {
+  //  if (!error && response.statusCode === 302) {
+  // const $ = cheerio.load(html)
+  //    const cookie = response.headers['set-cookie']
+  //    console.log(cookie)
+  // const $ = cheerio.load(html)
+  // console.log($)
+  //  }
+  // })
+
+  function getCookies (callback) {
+    request.post({
+      url: dinnerUrl + '/login',
+      json: jsonData
+    }, function (error, response, body) {
+      if (!error && response.statusCode === 302) {
+        const cookie = response.headers['set-cookie']
+        const location = response.headers.location
+        console.log(location)
+        return callback(null, cookie, location)
+      } else {
+        return callback(error)
+      }
+    })
+  }
+
+  function getLocation (callback) {
+    request.post({
+      url: dinnerUrl + '/login',
+      json: jsonData
+    }, function (error, response, body) {
+      if (!error && response.statusCode === 302) {
+        const location = response.headers.location
+        return callback(null, location)
+      } else {
+        return callback(error)
+      }
+    })
+  }
+
+  getLocation(function (err, res) {
+    if (!err) {
+      console.log(res)
+    }
+  })
+
+  request({
+    url: dinnerUrl,
+    headers: getCookies,
+    getLocation
+  }, function (error, response, html) {
+    console.log(response.statusCode)
     if (!error && response.statusCode === 200) {
-      const $ = cheerio.load(html)
-      // console.log($.html())
-      const username = $('.MsoNormal').find('[type=text]')
-      // const password = $('input')
-      // const loginBtn = $('input')
-      console.log(username.html())
-      // console.log(password.html())
-      // console.log(loginBtn.html())
+      console.log(html) // this console.logs my login page since requests w/o valid cookies get redirected to login
     }
   })
 })
