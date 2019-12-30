@@ -27,6 +27,9 @@ movieSearch.cinemaLink().then(function () {
   process.stdout.write('Scraping showtimes')
 }).then(function () {
   process.stdout.write('.')
+}).then(function () {
+  process.stdout.write('.')
+  console.log('\n')
 }).catch(function (err) {
   console.log(err)
 })
@@ -92,59 +95,6 @@ request(link, (error, response, html) => {
   }
 })
 */
-request(link, (error, response, html) => {
-  if (!error && response.statusCode === 200) {
-    const linkArr = []
-    const $ = cheerio.load(html)
-    const links = $('a')
-    links.each(function () {
-      const allLinks = $(this).attr('href')
-      linkArr.push(allLinks)
-    })
-    // const cinema = linkArr[1]
-    const firstMovie = 'http://vhost3.lnu.se:20080/cinema/check?day=05&movie=01'
-    const secondMovie = 'http://vhost3.lnu.se:20080/cinema/check?day=05&movie=02'
-    const thirdMovie = 'http://vhost3.lnu.se:20080/cinema/check?day=05&movie=03'
-    const time = []
-    request(firstMovie, (error, response, html) => {
-      if (!error && response.statusCode === 200) {
-        const $ = JSON.parse(html)
-        for (let i = 0; i < $.length; i++) {
-          var objectArr = $[i]
-          if (objectArr.status === 1) {
-            time.push('First movie ' + objectArr.time)
-          }
-        }
-      }
-      // console.log(time)
-    })
-
-    request(secondMovie, (error, response, html) => {
-      if (!error && response.statusCode === 200) {
-        const $ = JSON.parse(html)
-        for (let i = 0; i < $.length; i++) {
-          var objectArr = $[i]
-          if (objectArr.status === 1) {
-            time.push('Second Movie ' + objectArr.time)
-          }
-        }
-      }
-      // console.log(time)
-    })
-    request(thirdMovie, (error, response, html) => {
-      if (!error && response.statusCode === 200) {
-        const $ = JSON.parse(html)
-        for (let i = 0; i < $.length; i++) {
-          var objectArr = $[i]
-          if (objectArr.status === 1) {
-            time.push('Third movie ' + objectArr.time)
-          }
-        }
-      }
-      // console.log(time)
-    })
-  }
-})
 
 request(link, (error, response, html) => {
   const linkArr = []
