@@ -1,13 +1,35 @@
 const request = require('request')
 const cheerio = require('cheerio')
-const link = 'http://vhost3.lnu.se:20080/weekend'
 // const links = require('./lib/links.js')
-const calendarLinks = require('./lib/calendarLinks.js')
+// const rp = require('request-promise')
 
-const calendar = calendarLinks(link)
-console.log('Scraping links...', calendar)
-console.log('OK!')
+const link = 'http://vhost3.lnu.se:20080/weekend'
+const scrape = require('./lib/calendarLinks.js')
+const movieSearch = require('./lib/movie.js')
 
+scrape.availableDays().then(function (link) {
+  process.stdout.write('Scraping links')
+}).then(function () {
+  process.stdout.write('.')
+}).then(function () {
+  process.stdout.write('.')
+}).then(function () {
+  process.stdout.write('.')
+}).then(function () {
+  process.stdout.write('.')
+}).then(function () {
+  process.stdout.write('OK!')
+}).catch(function (err) {
+  console.log(err)
+})
+
+movieSearch.cinemaLink().then(function () {
+  process.stdout.write('Scraping showtimes')
+}).then(function () {
+  process.stdout.write('.')
+}).catch(function (err) {
+  console.log(err)
+})
 /*
 request(rootLink, (error, response, html) => {
   if (!error && response.statusCode === 200) {
