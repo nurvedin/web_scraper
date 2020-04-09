@@ -20,26 +20,38 @@ scrape.availableDays().then(function (link) {
   process.stdout.write('.')
 }).then(function () {
   process.stdout.write('OK!')
-
-  movieSearch.cinemaLink().then(function () {
-    process.stdout.write('Scraping showtimes')
-  }).then(function () {
-    process.stdout.write('.')
-  }).then(function () {
-    process.stdout.write('.')
-    console.log('\n')
-  }).catch(function (err) {
-    console.log(err)
-  })
-  
 }).catch(function (err) {
   console.log(err)
 })
 
-
+movieSearch.cinemaLink().then(function () {
+  process.stdout.write('Scraping showtimes')
+}).then(function () {
+  process.stdout.write('.')
+}).then(function () {
+  process.stdout.write('.')
+  console.log('\n')
+}).catch(function (err) {
+  console.log(err)
+})
 
 dinnerSearch.dinnerLink().then(function () {
   process.stdout.write('Scraping dinnertimes')
+}).then(function () {
+  process.stdout.write('.')
+}).then(function () {
+  process.stdout.write('.')
+}).then(function () {
+  process.stdout.write('.')
 }).catch(function (err) {
   console.log(err)
 })
+
+/*
+const recommendations = async () => {
+  const freeDay = await scrape.availableDays()
+  console.log(freeDay)
+}
+
+recommendations()
+*/
