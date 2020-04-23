@@ -53,9 +53,6 @@ console.log('\n')
 const recommendations = async () => {
   const movieChoice = await movieSearch.cinemaLink()
   const dinnerTime = await dinnerSearch.dinnerLink()
-  const flyingDeuce = 'The Flying Deuces'
-  const keepSeats = 'Keep Your Seats, Please'
-  const dayRaces = 'A Day at the Races'
   const option = []
 
   for (let i = 0; i < movieChoice.length; i++) {
@@ -66,6 +63,7 @@ const recommendations = async () => {
         option.push({
           day: dinnerTime[j].day,
           movie: movieChoice[i].movie,
+          movieTitle: movieChoice[i].movieTitle,
           startMovie: movieChoice[i].time,
           startDinner: dinnerTime[j].startTime / 100
         })
@@ -75,11 +73,11 @@ const recommendations = async () => {
 
   for (let i = 0; i < option.length; i++) {
     if (option[i].movie === '01') {
-      option[i].movie = flyingDeuce
+      option[i].movie = option[i].movieTitle
     } else if (option[i].movie === '02') {
-      option[i].movie = keepSeats
+      option[i].movie = option[i].movieTitle
     } else if (option[i].movie === '03') {
-      option[i].movie = dayRaces
+      option[i].movie = option[i].movieTitle
     }
   }
 
@@ -104,7 +102,7 @@ const recommendations = async () => {
   }
 
   for (let i = 0; i < booking.length; i++) {
-    console.log('On', booking[i].day, 'the movie', booking[i].movie, 'starts at', booking[i].startMovie, 'and there is a free table from', booking[i].startDinner)
+    console.log('On', booking[i].day, 'the movie', booking[i].movieTitle, 'starts at', booking[i].startMovie, 'and there is a free table from', booking[i].startDinner)
   }
 }
 
